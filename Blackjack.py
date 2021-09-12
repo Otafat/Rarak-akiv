@@ -1,4 +1,5 @@
 import random
+import easygui
 
 def create_cards():
     cards = []
@@ -61,17 +62,16 @@ hand = []
 hand, cards = start_cards(cards)
 bot_cards = []
 bot_cards, cards = start_cards(cards)
-print(f'Ya\'ve {count_play_cards(hand)} cards')
-print(f'Bot have {count_bot_cards(bot_cards)} cards')
+easygui.msgbox(f'Ya\'ve {count_play_cards(hand)} cards. \n Bot have {count_bot_cards(bot_cards)} cards.', 'Values', 'Continue')
 while True:
-    res = input('Ya will take one more card, innit? ')
+    res = easygui.enterbox('Ya will take one more card, innit? ', 'Innit?')
     if res == 'yes' or res == 'yeah':
         hand, cards = give_card(cards, hand)
     elif res == 'no' or res == 'nah':
         p = None
         del p
     else:
-        print('Sawy, I don\'ea understand ya. Write again.')
+        easygui.msgbox('Sawy, I don\'ea understand ya. Write again.', 'error', 'Try again')
         continue
 
     bots = count_bot_cards(bot_cards)
@@ -81,26 +81,25 @@ while True:
     else:
         bot_cards, cards = give_card(cards, bot_cards)
 
-    print(f'Ya\'ve {count_play_cards(hand)} cards')
-    print(f'Bot have {count_bot_cards(bot_cards)} cards')
+    easygui.msgbox(f'Ya\'ve {count_play_cards(hand)} cards \n Bot have {count_bot_cards(bot_cards)} cards', 'Values', 'Continue')
 
     if (res == 'no' or res == 'nah') and bots >= 16:
         player = count_play_cards(hand)
         bot = count_bot_cards(bot_cards)
         if player > 21 and bot <= 21:
-            print('Ya\'ve defeated')
+            easygui.msgbox('Ya\'ve defeated', 'defeat', 'Close the game')
             break
         elif bot > 21 and player <= 21:
-            print('Ya\'ve won')
+            easygui.msgbox('Ya\'ve won', 'Win', 'Close the game')
             break
         elif bot > 21 and player > 21:
-            print('default')
+            easygui.msgbox('Default', 'Default', 'Close the game')
             break
         elif bot > player:
-            print('Ya\'ve defeated')
+            easygui.msgbox('Ya\'ve defeated', 'defeat', 'Close the game')
             break
         elif player > bot:
-            print('Ya\'ve won')
+            easygui.msgbox('Ya\'ve won', 'Win', 'Close the game')
             break
     else:
         continue
